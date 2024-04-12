@@ -1,10 +1,9 @@
-// nestia configuration file
-import type sdk from "@nestia/sdk";
+import { INestiaConfig } from "@nestia/sdk";
 import { NestFactory } from "@nestjs/core";
 
 import { MyModule } from "./src/MyModule";
 
-const NESTIA_CONFIG: sdk.INestiaConfig = {
+export const NESTIA_CONFIG: INestiaConfig = {
   input: () => NestFactory.create(MyModule),
   output: "src/api",
   swagger: {
@@ -17,7 +16,6 @@ const NESTIA_CONFIG: sdk.INestiaConfig = {
     ],
     beautify: true,
   },
-  distribute: "packages/api",
   primitive: false,
   simulate: true,
 };

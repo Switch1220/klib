@@ -2,16 +2,15 @@ import fs from "fs";
 import { Singleton, randint } from "tstl";
 
 import { MyBackend } from "../MyBackend";
-import { MyConfiguration } from "../MyConfiguration";
 import { ErrorUtil } from "../utils/ErrorUtil";
 
-const EXTENSION = __filename.substring(__filename.length - 2);
+const EXTENSION = __filename.substr(-2);
 if (EXTENSION === "js") require("source-map-support/register");
 
 const directory = new Singleton(async () => {
-  await mkdir(`${MyConfiguration.ROOT}/assets`);
-  await mkdir(`${MyConfiguration.ROOT}/assets/logs`);
-  await mkdir(`${MyConfiguration.ROOT}/assets/logs/errors`);
+  await mkdir(`${__dirname}/../../assets`);
+  await mkdir(`${__dirname}/../../assets/logs`);
+  await mkdir(`${__dirname}/../../assets/logs/errors`);
 });
 
 function cipher(val: number): string {
@@ -37,7 +36,7 @@ async function handle_error(exp: any): Promise<void> {
 
     await directory.get();
     await fs.promises.writeFile(
-      `${MyConfiguration.ROOT}/assets/logs/errors/${fileName}.log`,
+      `${__dirname}/../../assets/logs/errors/${fileName}.log`,
       content,
       "utf8",
     );
@@ -45,11 +44,16 @@ async function handle_error(exp: any): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  // BACKEND SEVER
+  // BACKEND SEVER LATER
   const backend: MyBackend = new MyBackend();
   await backend.open();
 
-  // UNEXPECTED ERRORS
+  // POST-PROCESS
+  process.send?.("ready");
+  process.on("SIGTERM", async () => {
+    await backend.close();
+    process.exit(0);
+  });
   global.process.on("uncaughtException", handle_error);
   global.process.on("unhandledRejection", handle_error);
 }

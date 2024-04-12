@@ -8,7 +8,7 @@ module.exports = {
 
   // PLUG-IN CONFIGURATIONS
   plugins: ["@trivago/prettier-plugin-sort-imports"],
-  importOrder: ["<THIRD_PARTY_MODULES>", "^kliber-api(.*)$", "^[./]"],
+  importOrder: ["<THIRD_PARTY_MODULES>", "^@kliber-api(.*)$", "^[./]"],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   importOrderParserPlugins: ["decorators-legacy", "typescript"],

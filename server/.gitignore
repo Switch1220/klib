@@ -1,9 +1,11 @@
-.git/
 bin/
 dist/
 lib/
 node_modules/
-packages/api/lib/
+prisma/migrations
 
+*.DS_Store
 package-lock.json
 pnpm-lock.yaml
+swagger.json
+.npmrc

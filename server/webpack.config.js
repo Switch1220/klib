@@ -49,13 +49,17 @@ module.exports = {
           from: ".env",
           to: "[name][ext]",
         },
-        // {
-        //   from: "./node_modules/.prisma/client/*.node",
-        //   to: () => Promise.resolve("[path][name][ext]"),
-        //   globOptions: {
-        //     dot: true,
-        //   },
-        // },
+        {
+          from: "package.json",
+          to: "[name][ext]",
+        },
+        {
+          from: "node_modules/**/.prisma/client/*.node",
+          to: () => Promise.resolve("[path][name][ext]"),
+          globOptions: {
+            dot: true,
+          },
+        },
       ],
     }),
     new WriteFilePlugin(),

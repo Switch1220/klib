@@ -8,27 +8,12 @@ export class MyBackend {
   private application_?: INestApplication;
 
   public async open(): Promise<void> {
-    //----
-    // OPEN THE BACKEND SERVER
-    //----
     // MOUNT CONTROLLERS
     this.application_ = await NestFactory.create(MyModule, { logger: false });
 
     // DO OPEN
     this.application_.enableCors();
-    await this.application_.listen(MyConfiguration.API_PORT(), "0.0.0.0");
-
-    //----
-    // POST-PROCESSES
-    //----
-    // INFORM TO THE PM2
-    if (process.send) process.send("ready");
-
-    // WHEN KILL COMMAND COMES
-    process.on("SIGINT", async () => {
-      await this.close();
-      process.exit(0);
-    });
+    await this.application_.listen(MyConfiguration.API_PORT());
   }
 
   public async close(): Promise<void> {
