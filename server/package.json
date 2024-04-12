@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/samchon/nestia-start"
+    "url": "https://github.com/Switch1220/klib"
   },
   "keywords": [
     "nestia",
@@ -39,9 +39,9 @@
   "author": "switch1220",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samchon/nestia-start/issues"
+    "url": "https://github.com/Switch1220/klib/issues"
   },
-  "homepage": "https://github.com/samchon/nestia-start#readme",
+  "homepage": "https://github.com/Switch1220/klib#readme",
   "devDependencies": {
     "@nestia/e2e": "^0.4.3",
     "@nestia/sdk": "^3.0.1",
