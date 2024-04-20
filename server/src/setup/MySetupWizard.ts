@@ -1,10 +1,10 @@
 import cp from "child_process";
 
-import { MyGlobal } from "../MyGlobal";
+import { KGlobal } from "../KGlobal";
 
 export namespace MySetupWizard {
   export async function schema(): Promise<void> {
-    if (MyGlobal.testing === false)
+    if (KGlobal.testing === false)
       throw new Error(
         "Erron on SetupWizard.schema(): unable to reset database in non-test mode.",
       );
@@ -16,8 +16,8 @@ export namespace MySetupWizard {
     execute("reset")("--force");
     execute("dev")("--name init");
 
-    await MyGlobal.prisma.$executeRawUnsafe(
-      `GRANT SELECT ON ALL TABLES IN SCHEMA ${MyGlobal.env.POSTGRES_SCHEMA} TO ${MyGlobal.env.POSTGRES_USERNAME_READONLY}`,
+    await KGlobal.prisma.$executeRawUnsafe(
+      `GRANT SELECT ON ALL TABLES IN SCHEMA ${KGlobal.env.POSTGRES_SCHEMA} TO ${KGlobal.env.POSTGRES_USERNAME_READONLY}`,
     );
   }
 

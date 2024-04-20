@@ -1,7 +1,8 @@
-import { IRecordMerge } from "@kliber-api/lib/structures/common/IRecordMerge";
 import { Prisma } from "@prisma/client";
 
-import { MyGlobal } from "../../MyGlobal";
+import { IRecordMerge } from "@kliber-api/lib/structures/common/IRecordMerge";
+
+import { KGlobal } from "../../KGlobal";
 import { EntityUtil } from "../../utils/EntityUtil";
 import { ErrorProvider } from "./ErrorProvider";
 
@@ -22,7 +23,7 @@ export namespace EntityMergeProvider {
       // FIND MATCHED RECORDS
       const count: number = finder
         ? await finder(input)
-        : await (MyGlobal.prisma[table] as any).count({
+        : await (KGlobal.prisma[table] as any).count({
             where: {
               [primary.name]: {
                 in: [input.keep, ...input.absorbed],
@@ -36,6 +37,6 @@ export namespace EntityMergeProvider {
         });
 
       // DO MERGE
-      await EntityUtil.merge(MyGlobal.prisma)(table)(input);
+      await EntityUtil.merge(KGlobal.prisma)(table)(input);
     };
 }

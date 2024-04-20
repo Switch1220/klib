@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import { MyGlobal } from "../MyGlobal";
+import { KGlobal } from "../KGlobal";
 import { MySetupWizard } from "../setup/MySetupWizard";
 
 async function execute(
@@ -13,7 +13,7 @@ async function execute(
     const prisma = new PrismaClient({
       datasources: {
         db: {
-          url: `postgresql://${username}:${password}@${MyGlobal.env.POSTGRES_HOST}:${MyGlobal.env.POSTGRES_PORT}/${database}`,
+          url: `postgresql://${username}:${password}@${KGlobal.env.POSTGRES_HOST}:${KGlobal.env.POSTGRES_PORT}/${database}`,
         },
       },
     });
@@ -35,11 +35,11 @@ async function execute(
 
 async function main(): Promise<void> {
   const config = {
-    database: MyGlobal.env.POSTGRES_DATABASE,
-    schema: MyGlobal.env.POSTGRES_SCHEMA,
-    username: MyGlobal.env.POSTGRES_USERNAME,
-    readonlyUsername: MyGlobal.env.POSTGRES_USERNAME_READONLY,
-    password: MyGlobal.env.POSTGRES_PASSWORD,
+    database: KGlobal.env.POSTGRES_DATABASE,
+    schema: KGlobal.env.POSTGRES_SCHEMA,
+    username: KGlobal.env.POSTGRES_USERNAME,
+    readonlyUsername: KGlobal.env.POSTGRES_USERNAME_READONLY,
+    password: KGlobal.env.POSTGRES_PASSWORD,
   };
   const root = {
     account: process.argv[2] ?? "postgres",
@@ -79,7 +79,7 @@ async function main(): Promise<void> {
     `,
   );
 
-  MyGlobal.testing = true;
+  KGlobal.testing = true;
   await MySetupWizard.schema();
 }
 main().catch((exp) => {

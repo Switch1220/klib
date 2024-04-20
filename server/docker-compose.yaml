@@ -2,12 +2,27 @@ version: '3.8'
 
 services:
   kliber_db:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
       - POSTGRES_PASSWORD=root
-    container_name: postgres
+    container_name: klib-postgres
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: klib-pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=rkawk1234
+    ports:
+      - '5050:80'
+    depends_on:
+      - kliber_db
+
+volumes:
+  postgres:

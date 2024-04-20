@@ -2,13 +2,13 @@ import { ExceptionManager } from "@nestia/core";
 import { Prisma } from "@prisma/client";
 import path from "path";
 
-import { MyGlobal } from "./MyGlobal";
+import { KGlobal } from "./KGlobal";
 import { ErrorProvider } from "./providers/common/ErrorProvider";
 
-const EXTENSION = __filename.substr(-2);
+const EXTENSION = __filename.substring(-2);
 if (EXTENSION === "js") require("source-map-support").install();
 
-export namespace MyConfiguration {
+export namespace KConfiguration {
   export const ROOT = (() => {
     const splitted: string[] = __dirname.split(path.sep);
     return splitted.at(-1) === "src" && splitted.at(-2) === "bin"
@@ -16,7 +16,7 @@ export namespace MyConfiguration {
       : path.resolve(__dirname + "/..");
   })();
 
-  export const API_PORT = () => Number(MyGlobal.env.API_PORT);
+  export const API_PORT = () => Number(KGlobal.env.API_PORT);
 }
 
 ExceptionManager.insert(Prisma.PrismaClientKnownRequestError, (exp) => {

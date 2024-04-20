@@ -2,9 +2,9 @@ import { DynamicExecutor, StopWatch } from "@nestia/e2e";
 import fs from "fs";
 import { Singleton, randint, sleep_for } from "tstl";
 
-import { MyBackend } from "../src/MyBackend";
-import { MyConfiguration } from "../src/MyConfiguration";
-import { MyGlobal } from "../src/MyGlobal";
+import { KBackend } from "../src/KBackend";
+import { KConfiguration } from "../src/KConfiguration";
+import { KGlobal } from "../src/KGlobal";
 import api from "../src/api";
 import { MySetupWizard } from "../src/setup/MySetupWizard";
 import { ArgumentParser } from "../src/utils/ArgumentParser";
@@ -64,7 +64,7 @@ async function main(): Promise<void> {
 
   // CONFIGURE
   const options: IOptions = await getOptions();
-  MyGlobal.testing = true;
+  KGlobal.testing = true;
 
   if (options.reset) {
     await StopWatch.trace("Reset DB")(MySetupWizard.schema);
@@ -72,12 +72,12 @@ async function main(): Promise<void> {
   }
 
   // OPEN SERVER
-  const backend: MyBackend = new MyBackend();
+  const backend: KBackend = new KBackend();
   await backend.open();
 
   // DO TEST
   const connection: api.IConnection = {
-    host: `http://127.0.0.1:${MyConfiguration.API_PORT()}`,
+    host: `http://127.0.0.1:${KConfiguration.API_PORT()}`,
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",

@@ -3,23 +3,23 @@ import cp from "child_process";
 import fs from "fs";
 import { sleep_for } from "tstl";
 
-import { MyConfiguration } from "../src/MyConfiguration";
+import { KConfiguration } from "../src/KConfiguration";
 import MyApi from "../src/api";
 
 const webpackTest = async (): Promise<void> => {
-  if (fs.existsSync(MyConfiguration.ROOT + "/dist/server.js") === false)
+  if (fs.existsSync(KConfiguration.ROOT + "/dist/server.js") === false)
     throw new Error("Run npm run webpack command first.");
 
   // START BACKEND SERVER
-  const backend = cp.fork(`${MyConfiguration.ROOT}/dist/server.js`, {
-    cwd: `${MyConfiguration.ROOT}/dist`,
+  const backend = cp.fork(`${KConfiguration.ROOT}/dist/server.js`, {
+    cwd: `${KConfiguration.ROOT}/dist`,
   });
   console.log(__dirname + "/features");
   await sleep_for(2_500);
 
   // DO TEST
   const connection: MyApi.IConnection = {
-    host: `http://127.0.0.1:${MyConfiguration.API_PORT()}`,
+    host: `http://127.0.0.1:${KConfiguration.API_PORT()}`,
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",

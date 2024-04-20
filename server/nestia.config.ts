@@ -1,10 +1,10 @@
 import { INestiaConfig } from "@nestia/sdk";
 import { NestFactory } from "@nestjs/core";
 
-import { MyModule } from "./src/MyModule";
+import { KModule } from "./src/KModule";
 
-export const NESTIA_CONFIG: INestiaConfig = {
-  input: () => NestFactory.create(MyModule),
+export default {
+  input: () => NestFactory.create(KModule),
   output: "src/api",
   swagger: {
     output: "packages/api/swagger.json",
@@ -18,5 +18,4 @@ export const NESTIA_CONFIG: INestiaConfig = {
   },
   primitive: false,
   simulate: true,
-};
-export default NESTIA_CONFIG;
+} satisfies INestiaConfig;

@@ -1,19 +1,19 @@
 import { INestApplication } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 
-import { MyConfiguration } from "./MyConfiguration";
-import { MyModule } from "./MyModule";
+import { KConfiguration } from "./KConfiguration";
+import { KModule } from "./KModule";
 
-export class MyBackend {
+export class KBackend {
   private application_?: INestApplication;
 
   public async open(): Promise<void> {
     // MOUNT CONTROLLERS
-    this.application_ = await NestFactory.create(MyModule, { logger: false });
+    this.application_ = await NestFactory.create(KModule, { logger: false });
 
     // DO OPEN
     this.application_.enableCors();
-    await this.application_.listen(MyConfiguration.API_PORT());
+    await this.application_.listen(KConfiguration.API_PORT());
   }
 
   public async close(): Promise<void> {

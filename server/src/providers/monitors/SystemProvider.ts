@@ -1,9 +1,10 @@
-import { ISystem } from "@kliber-api/lib/structures/monitors/ISystem";
 import fs from "fs";
 import git from "git-last-commit";
 import { Singleton, randint } from "tstl";
 
-import { MyConfiguration } from "../../MyConfiguration";
+import { ISystem } from "@kliber-api/lib/structures/monitors/ISystem";
+
+import { KConfiguration } from "../../KConfiguration";
 import { DateUtil } from "../../utils/DateUtil";
 
 export class SystemProvider {
@@ -42,7 +43,7 @@ const commit_: Singleton<Promise<ISystem.ICommit>> = new Singleton(
 const package_: Singleton<Promise<ISystem.IPackage>> = new Singleton(
   async () => {
     const content: string = await fs.promises.readFile(
-      `${MyConfiguration.ROOT}/package.json`,
+      `${KConfiguration.ROOT}/package.json`,
       "utf8",
     );
     return JSON.parse(content);

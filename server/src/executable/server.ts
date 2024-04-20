@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Singleton, randint } from "tstl";
 
-import { MyBackend } from "../MyBackend";
+import { KBackend } from "../KBackend";
 import { ErrorUtil } from "../utils/ErrorUtil";
 
 const EXTENSION = __filename.substr(-2);
@@ -45,7 +45,7 @@ async function handle_error(exp: any): Promise<void> {
 
 async function main(): Promise<void> {
   // BACKEND SEVER LATER
-  const backend: MyBackend = new MyBackend();
+  const backend: KBackend = new KBackend();
   await backend.open();
 
   // POST-PROCESS

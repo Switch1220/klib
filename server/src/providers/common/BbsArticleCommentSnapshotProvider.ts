@@ -1,9 +1,10 @@
-import { IBbsArticleComment } from "@kliber-api/lib/structures/common/IBbsArticleComment";
-import { IEntity } from "@kliber-api/lib/structures/common/IEntity";
 import { Prisma } from "@prisma/client";
 import { v4 } from "uuid";
 
-import { MyGlobal } from "../../MyGlobal";
+import { IBbsArticleComment } from "@kliber-api/lib/structures/common/IBbsArticleComment";
+import { IEntity } from "@kliber-api/lib/structures/common/IEntity";
+
+import { KGlobal } from "../../KGlobal";
 import { AttachmentFileProvider } from "./AttachmentFileProvider";
 
 export namespace BbsArticleCommentSnapshotProvider {
@@ -39,7 +40,7 @@ export namespace BbsArticleCommentSnapshotProvider {
       input: IBbsArticleComment.IUpdate,
     ): Promise<IBbsArticleComment.ISnapshot> => {
       const snapshot =
-        await MyGlobal.prisma.bbs_article_comment_snapshots.create({
+        await KGlobal.prisma.bbs_article_comment_snapshots.create({
           data: {
             ...collect(input),
             comment: { connect: { id: comment.id } },

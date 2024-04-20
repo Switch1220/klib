@@ -1,9 +1,10 @@
-import { IBbsArticle } from "@kliber-api/lib/structures/common/IBbsArticle";
-import { IPage } from "@kliber-api/lib/structures/common/IPage";
 import { Prisma } from "@prisma/client";
 import { v4 } from "uuid";
 
-import { MyGlobal } from "../../MyGlobal";
+import { IBbsArticle } from "@kliber-api/lib/structures/common/IBbsArticle";
+import { IPage } from "@kliber-api/lib/structures/common/IPage";
+
+import { KGlobal } from "../../KGlobal";
 import { PaginationUtil } from "../../utils/PaginationUtil";
 import { AttachmentFileProvider } from "./AttachmentFileProvider";
 import { BbsArticleSnapshotProvider } from "./BbsArticleSnapshotProvider";
@@ -33,7 +34,7 @@ export namespace BbsArticleProvider {
       input: IBbsArticle.IRequest,
     ): Promise<IPage<IBbsArticle.IAbridge>> =>
       PaginationUtil.paginate({
-        schema: MyGlobal.prisma.bbs_articles,
+        schema: KGlobal.prisma.bbs_articles,
         payload: abridge.select,
         transform: abridge.transform,
       })({
@@ -80,7 +81,7 @@ export namespace BbsArticleProvider {
       input: IBbsArticle.IRequest,
     ): Promise<IPage<IBbsArticle.ISummary>> =>
       PaginationUtil.paginate({
-        schema: MyGlobal.prisma.bbs_articles,
+        schema: KGlobal.prisma.bbs_articles,
         payload: summarize.select,
         transform: summarize.transform,
       })({

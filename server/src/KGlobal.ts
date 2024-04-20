@@ -6,10 +6,8 @@ import typia from "typia";
 
 /**
  * Global variables of the server.
- *
- * @author Samchon
  */
-export class MyGlobal {
+export class KGlobal {
   public static testing: boolean = false;
 
   public static readonly prisma: PrismaClient = new PrismaClient();
@@ -34,7 +32,7 @@ export class MyGlobal {
    *
    * @param mode The new mode
    */
-  public static setMode(mode: typeof MyGlobal.mode): void {
+  public static setMode(mode: typeof KGlobal.mode): void {
     typia.assert<typeof mode>(mode);
     modeWrapper.value = mode;
   }

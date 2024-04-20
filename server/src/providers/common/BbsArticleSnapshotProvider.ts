@@ -1,9 +1,10 @@
-import { IBbsArticle } from "@kliber-api/lib/structures/common/IBbsArticle";
-import { IEntity } from "@kliber-api/lib/structures/common/IEntity";
 import { Prisma } from "@prisma/client";
 import { v4 } from "uuid";
 
-import { MyGlobal } from "../../MyGlobal";
+import { IBbsArticle } from "@kliber-api/lib/structures/common/IBbsArticle";
+import { IEntity } from "@kliber-api/lib/structures/common/IEntity";
+
+import { KGlobal } from "../../KGlobal";
 import { AttachmentFileProvider } from "./AttachmentFileProvider";
 
 export namespace BbsArticleSnapshotProvider {
@@ -35,14 +36,14 @@ export namespace BbsArticleSnapshotProvider {
   export const store =
     (article: IEntity) =>
     async (input: IBbsArticle.IUpdate): Promise<IBbsArticle.ISnapshot> => {
-      const snapshot = await MyGlobal.prisma.bbs_article_snapshots.create({
+      const snapshot = await KGlobal.prisma.bbs_article_snapshots.create({
         data: {
           ...collect(input),
           article: { connect: { id: article.id } },
         },
         ...json.select(),
       });
-      await MyGlobal.prisma.mv_bbs_article_last_snapshots.update({
+      await KGlobal.prisma.mv_bbs_article_last_snapshots.update({
         where: {
           bbs_article_id: article.id,
         },
