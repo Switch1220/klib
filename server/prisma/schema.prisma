@@ -48,8 +48,8 @@ model seat {
 model seat_reservations {
   id String @id @db.Uuid
 
-  seat_id String @unique @db.Uuid
-  user_id String @unique @db.Uuid
+  seat_id String @db.Uuid
+  user_id String @db.Uuid
 
   start_at DateTime @db.Timestamptz
   end_at   DateTime @db.Timestamptz
