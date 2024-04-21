@@ -36,7 +36,6 @@ export class SeatReservationController {
     @core.TypedParam("seatReservationId")
     seatReservationId: string & tags.Format<"uuid">,
   ) {
-    seatReservationId;
-    return null!;
+    return SeatReservationProvider.cancel(seatReservationId);
   }
 }
