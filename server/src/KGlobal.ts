@@ -48,6 +48,8 @@ export class KGlobal {
             clearTimeout(timeOutId);
 
             scheduleMap.delete(result.id);
+
+            WebSocketProvider.addEvent("seat-reservation-end", result.id);
           }
 
           return result;

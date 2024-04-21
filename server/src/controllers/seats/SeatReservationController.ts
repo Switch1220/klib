@@ -1,5 +1,6 @@
 import core from "@nestia/core";
 import { Controller } from "@nestjs/common";
+import { tags } from "typia";
 
 import { IReserve } from "@kliber-api/lib/structures/seats/IReservation";
 
@@ -23,5 +24,19 @@ export class SeatReservationController {
       seatId: input.seatId,
       userId: token.id,
     });
+  }
+
+  /**
+   * Cancel seat reservation
+   *
+   * @author Switch
+   */
+  @core.TypedRoute.Patch(":seatReservationId")
+  public async cancel(
+    @core.TypedParam("seatReservationId")
+    seatReservationId: string & tags.Format<"uuid">,
+  ) {
+    seatReservationId;
+    return null!;
   }
 }
