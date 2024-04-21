@@ -35,6 +35,13 @@ export namespace SeatReservationProvider {
     // The userId can already be assumed to be valid due to preceded jwt validation.
     // So no need to validate userId.
 
+    // validate seat id
+    await KGlobal.prisma.seat.findFirstOrThrow({
+      where: {
+        id: input.seatId,
+      },
+    });
+
     if ((await canReserveSeat(input.seatId)) === false) {
       throw ErrorProvider.conflict({
         accessor: "input.seatId",
