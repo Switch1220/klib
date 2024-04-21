@@ -4,7 +4,7 @@ import { Singleton, randint } from "tstl";
 import { KBackend } from "../KBackend";
 import { ErrorUtil } from "../utils/ErrorUtil";
 
-const EXTENSION = __filename.substr(-2);
+const EXTENSION = __filename.substring(-2);
 if (EXTENSION === "js") require("source-map-support/register");
 
 const directory = new Singleton(async () => {

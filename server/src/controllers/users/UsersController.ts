@@ -1,8 +1,11 @@
 import core from "@nestia/core";
 import { Controller } from "@nestjs/common";
-import { tags } from "typia";
 
 import { IUser } from "@kliber-api/lib/structures/users/IUser";
+
+import { Auth } from "../../decorators/Auth";
+import { UsersProvider } from "../../providers/users/UsersProvider";
+import { Jwt } from "../../utils/JwtTokenManager";
 
 @Controller("users")
 export class UsersController {
@@ -11,22 +14,8 @@ export class UsersController {
    *
    * @author Switch
    */
-  @core.TypedRoute.Get(":id")
-  public at(
-    @core.TypedParam("id") id: string & tags.Format<"uuid">,
-  ): Promise<IUser> {
-    id;
-    return null!;
-  }
-
-  /**
-   * Create a new user
-   *
-   * @author Switch
-   */
-  @core.TypedRoute.Post()
-  public async create(@core.TypedBody() input: IUser.ICreate): Promise<IUser> {
-    input;
-    return null!;
+  @core.TypedRoute.Get()
+  public at(@Auth() token: Jwt): Promise<IUser> {
+    return UsersProvider.at(token.id);
   }
 }

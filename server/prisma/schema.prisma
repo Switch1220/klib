@@ -36,23 +36,13 @@ model user {
 model seat {
   id String @id @db.Uuid
 
-  info seat_info?
+  coordinate_x Float
+  coordinate_y Float
 
   //----
   // RELATIONS
   //----
   reservations seat_reservations[]
-}
-
-model seat_info {
-  id String @id @db.Uuid
-
-  seatId String @unique @db.Uuid
-
-  //----
-  // RELATIONS
-  //----
-  seat seat @relation(fields: [seatId], references: [id])
 }
 
 model seat_reservations {

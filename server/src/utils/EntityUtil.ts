@@ -1,6 +1,11 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { HashMap, hash, ranges } from "tstl";
 import typia from "typia";
+
+import { KGlobal } from "../KGlobal";
+
+// extended prisma client
+type PrismaClient = typeof KGlobal.prisma;
 
 /**
  * Utility for database entity.

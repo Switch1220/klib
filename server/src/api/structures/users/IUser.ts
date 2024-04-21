@@ -10,6 +10,13 @@ export interface IUser {
 }
 
 export namespace IUser {
+  export namespace IRequest {
+    export interface ISearch {
+      username: string;
+      password: string;
+    }
+  }
+
   export interface ICreate {
     username: string;
     password: string;

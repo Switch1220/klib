@@ -6,4 +6,5 @@
 //================================================================
 export * as monitors from "./monitors";
 export * as seats from "./seats";
+export * as auth from "./auth";
 export * as users from "./users";

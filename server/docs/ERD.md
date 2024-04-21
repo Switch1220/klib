@@ -16,10 +16,8 @@ erDiagram
 }
 "seat" {
   String id PK
-}
-"seat_info" {
-  String id PK
-  String seatId FK
+  Float coordinate_x
+  Float coordinate_y
 }
 "seat_reservations" {
   String id PK
@@ -29,7 +27,6 @@ erDiagram
   DateTime end_at
   DateTime canceled_at "nullable"
 }
-"seat_info" |o--|| "seat" : seat
 "seat_reservations" |o--|| "seat" : target_seat
 "seat_reservations" |o--|| "user" : target_user
 ```
@@ -48,12 +45,8 @@ erDiagram
 
 **Properties**
   - `id`: 
-
-### `seat_info`
-
-**Properties**
-  - `id`: 
-  - `seatId`: 
+  - `coordinate_x`: 
+  - `coordinate_y`: 
 
 ### `seat_reservations`
 
