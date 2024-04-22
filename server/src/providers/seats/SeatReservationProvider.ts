@@ -29,16 +29,27 @@ export namespace SeatReservationProvider {
   /* -----------------------------------------------------------
     WRITERS
   ----------------------------------------------------------- */
-  export const cancel = async (seatReservationId: string) => {
+  export const cancel = async (
+    seatReservationId: string,
+    userId: string,
+  ): Promise<void> => {
     // validate seat reservation id
     await KGlobal.prisma.seat_reservations.findFirstOrThrow({
       where: { id: seatReservationId },
     });
 
-    await KGlobal.prisma.seat_reservations.update({
+    const record = await KGlobal.prisma.seat_reservations.update({
       where: { id: seatReservationId },
       data: { canceled_at: new Date() },
     });
+
+    if (record.user_id !== userId) {
+      throw ErrorProvider.forbidden({
+        accessor: "userId",
+        message:
+          "Unauthorized user. You are not authorized to cancel this reservation.",
+      });
+    }
   };
 
   export const create = async (

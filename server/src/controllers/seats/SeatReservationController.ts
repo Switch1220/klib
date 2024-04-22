@@ -31,11 +31,12 @@ export class SeatReservationController {
    *
    * @author Switch
    */
-  @core.TypedRoute.Patch(":seatReservationId")
+  @core.TypedRoute.Delete(":seatReservationId")
   public async cancel(
+    @Auth() token: Jwt,
     @core.TypedParam("seatReservationId")
     seatReservationId: string & tags.Format<"uuid">,
-  ) {
-    return SeatReservationProvider.cancel(seatReservationId);
+  ): Promise<void> {
+    return SeatReservationProvider.cancel(seatReservationId, token.id);
   }
 }
