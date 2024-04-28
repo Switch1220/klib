@@ -30,22 +30,60 @@ model user {
   //----
   // RELATIONS
   //----
-  reservations seat_reservations[]
+  reservations seat_reservation[]
 }
 
 model seat {
   id String @id @db.Uuid
 
-  coordinate_x Float
-  coordinate_y Float
+  seat_node_id String? @db.Uuid
 
   //----
   // RELATIONS
   //----
-  reservations seat_reservations[]
+  info      seat_info?
+  seat_node seat_node? @relation(fields: [seat_node_id], references: [id])
+
+  reservations seat_reservation[]
 }
 
-model seat_reservations {
+model seat_info {
+  id String @id @db.Uuid
+
+  seat_id String @unique @db.Uuid
+
+  coordinate_x Float
+  coordinate_y Float
+
+  seat seat @relation(fields: [seat_id], references: [id])
+}
+
+/// ESP32 unit
+model seat_node {
+  id String @id @db.Uuid
+
+  seat_group_id String? @db.Uuid
+
+  device_id String @unique @db.Uuid
+
+  //----
+  // RELATIONS
+  //----
+  seats      seat[]
+  seat_group seat_group? @relation(fields: [seat_group_id], references: [id])
+}
+
+/// Seat Group. ex) 1층, 2층
+model seat_group {
+  id String @id @db.Uuid
+
+  //----
+  // RELATIONS
+  //----
+  nodes seat_node[]
+}
+
+model seat_reservation {
   id String @id @db.Uuid
 
   seat_id String @db.Uuid

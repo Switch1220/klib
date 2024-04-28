@@ -15,13 +15,15 @@ export namespace SeatsProvider {
     ): ISeat => ({
       id: input.id,
 
-      coordinateX: input.coordinate_x,
-      coordinateY: input.coordinate_y,
+      coordinateX: input.info?.coordinate_x,
+      coordinateY: input.info?.coordinate_y,
     });
 
     export const select = () =>
       ({
-        include: {} as const,
+        include: {
+          info: true,
+        } as const,
       }) satisfies Prisma.seatFindManyArgs;
   }
 
@@ -29,7 +31,7 @@ export namespace SeatsProvider {
     READERS
   ----------------------------------------------------------- */
   export const index = async (): Promise<ISeat[]> => {
-    const records = await KGlobal.prisma.seat.findMany();
+    const records = await KGlobal.prisma.seat.findMany(json.select());
 
     return records.map(json.transform);
   };
@@ -42,9 +44,15 @@ export namespace SeatsProvider {
     const record = await KGlobal.prisma.seat.create({
       data: {
         id: v4(),
-        coordinate_x: input.coordinateX,
-        coordinate_y: input.coordinateY,
+        info: {
+          create: {
+            id: v4(),
+            coordinate_x: input.coordinateX,
+            coordinate_y: input.coordinateY,
+          },
+        },
       },
+      ...json.select(),
     });
 
     return json.transform(record);

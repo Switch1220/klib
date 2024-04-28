@@ -16,10 +16,23 @@ erDiagram
 }
 "seat" {
   String id PK
+  String seat_node_id FK "nullable"
+}
+"seat_info" {
+  String id PK
+  String seat_id FK
   Float coordinate_x
   Float coordinate_y
 }
-"seat_reservations" {
+"seat_node" {
+  String id PK
+  String seat_group_id FK "nullable"
+  String device_id UK
+}
+"seat_group" {
+  String id PK
+}
+"seat_reservation" {
   String id PK
   String seat_id FK
   String user_id FK
@@ -27,8 +40,11 @@ erDiagram
   DateTime end_at
   DateTime canceled_at "nullable"
 }
-"seat_reservations" |o--|| "seat" : target_seat
-"seat_reservations" |o--|| "user" : target_user
+"seat" }o--o| "seat_node" : seat_node
+"seat_info" |o--|| "seat" : seat
+"seat_node" }o--o| "seat_group" : seat_group
+"seat_reservation" }o--|| "seat" : target_seat
+"seat_reservation" }o--|| "user" : target_user
 ```
 
 ### `user`
@@ -45,10 +61,31 @@ erDiagram
 
 **Properties**
   - `id`: 
+  - `seat_node_id`: 
+
+### `seat_info`
+
+**Properties**
+  - `id`: 
+  - `seat_id`: 
   - `coordinate_x`: 
   - `coordinate_y`: 
 
-### `seat_reservations`
+### `seat_node`
+ESP32 unit
+
+**Properties**
+  - `id`: 
+  - `seat_group_id`: 
+  - `device_id`: 
+
+### `seat_group`
+Seat Group. ex) 1층, 2층
+
+**Properties**
+  - `id`: 
+
+### `seat_reservation`
 
 **Properties**
   - `id`: 

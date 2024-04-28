@@ -3,8 +3,8 @@ import { tags } from "typia";
 export interface ISeat {
   id: string & tags.Format<"uuid">;
 
-  coordinateX: number & tags.Type<"float">;
-  coordinateY: number & tags.Type<"float">;
+  coordinateX?: number & tags.Type<"float">;
+  coordinateY?: number & tags.Type<"float">;
 }
 
 export namespace ISeat {

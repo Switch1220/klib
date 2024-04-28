@@ -12,7 +12,7 @@ export namespace SeatReservationProvider {
   ----------------------------------------------------------- */
   export namespace json {
     export const transform = (
-      input: Prisma.seat_reservationsGetPayload<ReturnType<typeof select>>,
+      input: Prisma.seat_reservationGetPayload<ReturnType<typeof select>>,
     ): IReserve => ({
       id: input.id,
 
@@ -23,7 +23,7 @@ export namespace SeatReservationProvider {
     export const select = () =>
       ({
         include: {} as const,
-      }) satisfies Prisma.seat_reservationsFindManyArgs;
+      }) satisfies Prisma.seat_reservationFindManyArgs;
   }
 
   /* -----------------------------------------------------------
@@ -34,11 +34,11 @@ export namespace SeatReservationProvider {
     userId: string,
   ): Promise<void> => {
     // validate seat reservation id
-    await KGlobal.prisma.seat_reservations.findFirstOrThrow({
+    await KGlobal.prisma.seat_reservation.findFirstOrThrow({
       where: { id: seatReservationId },
     });
 
-    const record = await KGlobal.prisma.seat_reservations.update({
+    const record = await KGlobal.prisma.seat_reservation.update({
       where: { id: seatReservationId },
       data: { canceled_at: new Date() },
     });
@@ -62,6 +62,11 @@ export namespace SeatReservationProvider {
     await KGlobal.prisma.seat.findFirstOrThrow({
       where: {
         id: input.seatId,
+        seat_node: {
+          seat_group_id: {
+            not: null,
+          },
+        },
       },
     });
 
@@ -73,7 +78,7 @@ export namespace SeatReservationProvider {
     }
 
     // Issue a new reservation
-    const record = await KGlobal.prisma.seat_reservations.create({
+    const record = await KGlobal.prisma.seat_reservation.create({
       data: {
         id: v4(),
         seat_id: input.seatId,
@@ -92,7 +97,7 @@ export namespace SeatReservationProvider {
    * The conditions for issuing a new reservation are that the latest record is null or the end date of the latest record has already passed.
    */
   const canReserveSeat = async (seatId: string): Promise<boolean> => {
-    const latest = await KGlobal.prisma.seat_reservations.findFirst({
+    const latest = await KGlobal.prisma.seat_reservation.findFirst({
       where: { seat_id: seatId, canceled_at: null },
       orderBy: {
         end_at: "desc",
