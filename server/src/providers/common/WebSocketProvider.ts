@@ -1,6 +1,7 @@
 import { Observable, Subject } from "rxjs";
 
 export interface WebsocketEvent {
+  deviceId: string;
   name: string;
   data: unknown;
 }
@@ -8,8 +9,16 @@ export interface WebsocketEvent {
 export class WebSocketProvider {
   static subject = new Subject<WebsocketEvent>();
 
-  static addEvent(eventName: string, eventData: unknown): void {
-    WebSocketProvider.subject.next({ name: eventName, data: eventData });
+  static addEvent(
+    deviceId: string,
+    eventName: string,
+    eventData: unknown,
+  ): void {
+    WebSocketProvider.subject.next({
+      deviceId: deviceId,
+      name: eventName,
+      data: eventData,
+    });
   }
 
   static getEventSubject$(): Observable<WebsocketEvent> {
